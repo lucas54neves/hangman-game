@@ -11,5 +11,37 @@ def get_words():
 def get_random_word():
   return random.choice(getWords())
 
+def print_person(number):
+  if (number == 1):
+    print('   O')
+    print()
+    print()
+    print()
+  if (number == 2):
+    print('   O')
+    print('  /')
+    print()
+    print()
+  if (number == 3):
+    print('   O')
+    print('  / \\')
+    print()
+    print()
+  if (number == 4):
+    print('   O')
+    print('  /|\\')
+    print('   |')
+    print()
+  if (number == 5):
+    print('   O')
+    print('  /|\\')
+    print('   |')
+    print('  /')
+  if (number == 6):
+    print('   O')
+    print('  /|\\')
+    print('   |')
+    print('  / \\')
+
 def game():
   word = getRandomWord()
