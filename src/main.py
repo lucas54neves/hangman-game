@@ -93,11 +93,16 @@ def you_win(word):
 # No final do jogo, o usuario e perguntado se deseja jogar novamente.
 def game():
     file = open('logs.txt', 'a', encoding='utf-8')
+
     attempts = []
 
     wrong_attempts = []
 
-    print('O jogo vai começar! Entre com a dificuldade desejada.')
+    print('O jogo vai começar!')
+
+    name = input('Qual seu nome? ')
+    
+    print('Entre com a dificuldade desejada.')
 
     print('[1 - fácil / 2 - médio / 3 - difícil]')
 
@@ -158,12 +163,17 @@ def game():
             print('A palavra é {}.'.format(word))
 
             answer = input('Deseja jogar novamente? [sim / não] ')
+
+            file.write(f'{name}\t{word}\t{len(attempts)}\t{len(wrong_attempts)}\n')
+
         elif len(wrong_attempts) == 6:
             print('Sinto muito! Você perdeu.')
 
             print('A palavra é {}.'.format(word))
 
             answer = input('Deseja jogar novamente? [sim / não] ')
+
+            file.write(f'{name}\t{word}\t{len(attempts)}\t{len(wrong_attempts)}\n')
 
         if answer == 'sim':
             attempts = []
@@ -176,7 +186,7 @@ def game():
 
             difficulty = int(input('Dificuldade: '))
 
-            while difficulty != 1 or difficulty != 2 or difficulty != 3:
+            while difficulty != 1 and difficulty != 2 and difficulty != 3:
                 print('Dificuldade não cadastrada. Tente novamente.')
 
                 difficulty = int(input('Dificuldade: '))
@@ -184,5 +194,7 @@ def game():
             word = get_random_word(difficulty)
 
             display_word = ['_' for element in range(0, len(word))]
+    
+    file.close()
 
 game()
