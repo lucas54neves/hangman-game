@@ -88,19 +88,11 @@ def update_word(letter, word, display_word):
 def you_win(word):
     return not '_' in word
 
-# Funcao principal do jogo. O funcionamento do jogo funciona a partir
-# de um loop que para apenas se o jogador ganhar ou errar seis vezes.
-# No final do jogo, o usuario e perguntado se deseja jogar novamente.
-def game():
-    file = open('logs.txt', 'a', encoding='utf-8')
-
+# Funcao que inicializa as variaveis principais do jogo
+def game_startup():
     attempts = []
 
     wrong_attempts = []
-
-    print('O jogo vai começar!')
-
-    name = input('Qual seu nome? ')
     
     print('Entre com a dificuldade desejada.')
 
@@ -108,7 +100,7 @@ def game():
 
     difficulty = int(input('Dificuldade: '))
 
-    while difficulty != 1 and difficulty != 2 and difficulty != 3:
+    while difficulty < 1 or difficulty > 3:
         print('Dificuldade não cadastrada. Tente novamente.')
 
         difficulty = int(input('Dificuldade: '))
@@ -116,6 +108,21 @@ def game():
     word = get_random_word(difficulty)
 
     display_word = ['_' for element in range(0, len(word))]
+
+    return (attempts, wrong_attempts, word, display_word)
+
+
+# Funcao principal do jogo. O funcionamento do jogo funciona a partir
+# de um loop que para apenas se o jogador ganhar ou errar seis vezes.
+# No final do jogo, o usuario e perguntado se deseja jogar novamente.
+def game():
+    file = open('logs.txt', 'a', encoding='utf-8')
+
+    print('O jogo vai começar!')
+
+    name = input('Qual seu nome? ')
+
+    (attempts, wrong_attempts, word, display_word) = game_startup()
 
     while len(wrong_attempts) < 6 and not you_win(display_word):
         print('==================')
@@ -176,24 +183,7 @@ def game():
             file.write(f'{name}\t{word}\t{len(attempts)}\t{len(wrong_attempts)}\n')
 
         if answer == 'sim':
-            attempts = []
-
-            wrong_attempts = []
-
-            print('O jogo vai começar! Entre com a dificuldade desejada.')
-
-            print('[1 - fácil / 2 - médio / 3 - difícil]')
-
-            difficulty = int(input('Dificuldade: '))
-
-            while difficulty != 1 and difficulty != 2 and difficulty != 3:
-                print('Dificuldade não cadastrada. Tente novamente.')
-
-                difficulty = int(input('Dificuldade: '))
-
-            word = get_random_word(difficulty)
-
-            display_word = ['_' for element in range(0, len(word))]
+            (attempts, wrong_attempts, word, display_word) = game_startup()
     
     file.close()
 
